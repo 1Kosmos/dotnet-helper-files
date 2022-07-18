@@ -8,14 +8,14 @@
 ## Clone and build dotnet helpers solution to create .dll
 
 - Clone the project repository: git clone https://github.com/1Kosmos/dotnet-helper-files.git
-- Open the project solution in visual studio 2017 or higher (double click on ecdsaHelper.sln file).
+- Open the project solution in visual studio 2017 or higher (double click on BIDHelpers.sln file).
 - Build the solution, by clicking on project -> right click -> Build.
-- After successful build, dll named ecdsaHelper.dll will be generated on location: ecdsaHelper -> bin -> Debug.
+- After successful build, dll named BIDHelpers.dll will be generated on location: BIDHelpers -> bin -> Debug.
 
 ## Add dotnet helpers .dll reference into your project
 
-- In your project directory, copy and paste "ecdsaHelper.dll" file into your desired location.
-- Add reference, Go into solution explorer, right click on "References" -> Add Reference -> Browse (select the "ecdsaHelper.dll" file pasted on above location).
+- In your project directory, copy and paste "BIDHelpers.dll" file into your desired location.
+- Add reference, Go into solution explorer, right click on "References" -> Add Reference -> Browse (select the "BIDHelpers.dll" file pasted on above location).
 - After successfully adding the reference, it will be visible under the "References" inside the solution explorer.
 
 ## How to use dotnet helpers into your project
@@ -23,7 +23,7 @@
 Add namespace on the top of the your page:
 
 ```
-using ecdsaHelper;
+using BIDHelpers.BIDECDSA;
 
 ```
 
@@ -41,7 +41,7 @@ Copy and past below line:
 Copy and past below line:
 
 ```
- var sharedKey = BIDECDSA.CreateSharedKey(keyPair[0], keyPair[1]);
+ var sharedKey = BIDECDSA.CreateSharedKey(keyPair.prKey, keyPair.pKey);
 
 ```
 
@@ -50,7 +50,7 @@ Copy and past below line:
 Copy and past below line:
 
 ```
- var encrypted = BIDECDSA.Encrypt("any string", sharedKey);
+ var encryptedBase64String = BIDECDSA.Encrypt("any string", sharedKey);
 
 ```
 
@@ -59,6 +59,6 @@ Copy and past below line:
 Copy and past below line:
 
 ```
-var decrypt = BIDECDSA.Decrypt(encrypted, sharedKey);
+var decryptedPlainString = BIDECDSA.Decrypt(encryptedBase64String, sharedKey);
 
 ```
