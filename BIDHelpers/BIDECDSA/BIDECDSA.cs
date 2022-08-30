@@ -22,7 +22,7 @@ namespace BIDHelpers.BIDECDSA
         /// <summary>
         /// Return private and public key pair
         /// </summary>
-        /// <returns>Returns [prKey, pKey] Array</returns>
+        /// <returns>Returns {prKey, pKey} Collection</returns>
         public static BIDKeyPair GenerateKeyPair()
         {
             var set1 = new ECKeyPairGenerator("EC");
