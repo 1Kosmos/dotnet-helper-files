@@ -62,3 +62,31 @@ Copy and past below line:
 var decryptedPlainString = BIDECDSA.Decrypt(encryptedBase64String, sharedKey);
 
 ```
+
+## To get community info and sd (Service Directory)
+
+Add namespace on the top of the your page:
+
+```
+using BIDHelpers.BIDTenant;
+using BIDHelpers.BIDTenant.Model;
+
+```
+
+- To get Community Information
+Copy and past below line:
+
+```
+BIDTenantInfo bidTenantInfo = new BIDTenantInfo("dns", "communityName", "lecenseKey");
+BIDCommunityInfo communityInfo = BIDTenant.getCommunityInfo(bidTenantInfo);
+
+```
+
+- To get SD (Service Directory) Information
+Copy and past below line:
+
+```
+BIDTenantInfo bidTenantInfo = new BIDTenantInfo("dns", "communityName", "lecenseKey");
+BIDSD sd = BIDTenant.getSD(bidTenantInfo);
+
+```
