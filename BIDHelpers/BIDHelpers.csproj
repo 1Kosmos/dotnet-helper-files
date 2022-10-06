@@ -55,12 +55,18 @@
   <ItemGroup>
     <Compile Include="BIDECDSA\BIDECDSA.cs" />
     <Compile Include="BIDECDSA\Model\BIDKeyPair.cs" />
+    <Compile Include="BIDSessions\BIDSessions.cs" />
+    <Compile Include="BIDSessions\Model\BIDDevice.cs" />
+    <Compile Include="BIDSessions\Model\BIDPoNData.cs" />
+    <Compile Include="BIDSessions\Model\BIDSession.cs" />
+    <Compile Include="BIDSessions\Model\BIDSessionResponse.cs" />
     <Compile Include="BIDTenant\BIDTenant.cs" />
     <Compile Include="BIDTenant\Model\BIDCommunityInfo.cs" />
     <Compile Include="BIDTenant\Model\BIDSD.cs" />
     <Compile Include="BIDTenant\Model\BIDTenantInfo.cs" />
     <Compile Include="BIDECDSA\Utils\Cryptor.cs" />
     <Compile Include="BIDECDSA\Model\ECCKey.cs" />
+    <Compile Include="BIDUsers\BIDUsers.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="WTM\WTM.cs" />
   </ItemGroup>

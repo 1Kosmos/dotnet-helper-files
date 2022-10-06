@@ -18,6 +18,22 @@ namespace BIDHelpers
     class WTM
     {
         private static HttpClient httpClient;
+
+        public static IDictionary<string, object> MakeRequestId()
+        {
+            //gets the epoch seconds
+            TimeSpan t = DateTime.UtcNow - new DateTime(1970, 1, 1);
+            int secondsSinceEpoch = (int)t.TotalSeconds;
+            IDictionary<string, object> ret = new Dictionary<string, object>
+            {
+                ["ts"] = secondsSinceEpoch,
+                ["uuid"] = Guid.NewGuid().ToString(),
+                ["appid"] = "fixme"
+            };
+
+            return ret;
+        }
+
         public static IDictionary<string, string> DefaultHeaders()
         {
             return new Dictionary<string, string>(){
@@ -49,10 +65,14 @@ namespace BIDHelpers
                 httpResponse = httpClient.SendAsync(httpRequestMessage).Result;
                 ret["status"] = httpResponse.StatusCode;
                 var content = httpResponse.Content.ReadAsStringAsync().Result;
-                if (!string.IsNullOrWhiteSpace(content))
+                if (!string.IsNullOrWhiteSpace(content) && (httpResponse.StatusCode == HttpStatusCode.OK || httpResponse.StatusCode == HttpStatusCode.Accepted || httpResponse.StatusCode == HttpStatusCode.Created))
                 {
                     var api_response = JsonConvert.DeserializeObject<dynamic>(content);
                     ret["json"] = api_response;
+                }
+                else
+                {
+                    ret["error"] = content;
                 }
             }
             catch (Exception ex)

@@ -78,7 +78,7 @@ Copy and past below line:
 
 ```
 BIDTenantInfo bidTenantInfo = new BIDTenantInfo("dns", "communityName", "lecenseKey");
-BIDCommunityInfo communityInfo = BIDTenant.getCommunityInfo(bidTenantInfo);
+BIDCommunityInfo communityInfo = BIDTenant.GetCommunityInfo(bidTenantInfo);
 
 ```
 
@@ -87,6 +87,33 @@ Copy and past below line:
 
 ```
 BIDTenantInfo bidTenantInfo = new BIDTenantInfo("dns", "communityName", "lecenseKey");
-BIDSD sd = BIDTenant.getSD(bidTenantInfo);
+BIDSD sd = BIDTenant.GetSD(bidTenantInfo);
+
+```
+
+## To Create OR Poll UWL2.0 session
+
+Add namespace on the top of the your page:
+
+```
+using BIDHelpers.BIDSessions;
+using BIDHelpers.BIDSessions.Model;
+
+```
+- To create new UWL2.0 session 
+Copy and past below line:
+
+```
+BIDTenantInfo bidTenantInfo = new BIDTenantInfo("dns", "communityName", "lecenseKey");
+BIDSession sessionResponse = BIDSessions.CreateNewSession(bidTenantInfo, null, null);
+
+```
+
+- - To poll new UWL2.0 session 
+Copy and past below line:
+
+```
+BIDTenantInfo bidTenantInfo = new BIDTenantInfo("dns", "communityName", "lecenseKey");
+BIDSessionResponse pollResponse = BIDSessions.PollSession(bidTenantInfo, "sessionResponse.sessionId", true, true);
 
 ```
