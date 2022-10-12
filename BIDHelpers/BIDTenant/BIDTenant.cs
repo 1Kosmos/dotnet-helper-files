@@ -12,6 +12,7 @@ using Newtonsoft.Json;
 using System.Runtime.Caching;
 using BIDHelpers.BIDTenant.Model;
 using System.Net;
+using BIDHelpers.BIDECDSA.Model;
 
 namespace BIDHelpers.BIDTenant
 {
@@ -26,7 +27,9 @@ namespace BIDHelpers.BIDTenant
             AbsoluteExpiration = DateTimeOffset.Now.AddSeconds(10 * 60),
 
         };
-        public static BIDCommunityInfo getCommunityInfo(BIDTenantInfo tenantInfo)
+
+        private static BIDKeyPair keySet;
+        public static BIDCommunityInfo GetCommunityInfo(BIDTenantInfo tenantInfo)
         {
             BIDCommunityInfo communityInfo = null;
             try
@@ -116,7 +119,7 @@ namespace BIDHelpers.BIDTenant
             return communityInfo;
         }
 
-        public static BIDSD getSD(BIDTenantInfo tenantInfo)
+        public static BIDSD GetSD(BIDTenantInfo tenantInfo)
         {
             BIDSD sd;
             try
@@ -189,5 +192,18 @@ namespace BIDHelpers.BIDTenant
             return sd;
         }
 
+        public static BIDKeyPair GetKeySet()
+        {
+            if (keySet == null)
+            {
+                keySet = BIDECDSA.BIDECDSA.GenerateKeyPair();
+            }
+            return keySet;
+        }
+
+        public static void SetKeySet(BIDKeyPair keyPairKeySet)
+        {
+            keySet = keyPairKeySet;
+        }
     }
 }
