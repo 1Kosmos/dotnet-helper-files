@@ -109,11 +109,38 @@ BIDSession sessionResponse = BIDSessions.CreateNewSession(bidTenantInfo, null, n
 
 ```
 
-- - To poll new UWL2.0 session 
+- To poll new UWL2.0 session 
 Copy and past below line:
 
 ```
 BIDTenantInfo bidTenantInfo = new BIDTenantInfo("dns", "communityName", "lecenseKey");
 BIDSessionResponse pollResponse = BIDSessions.PollSession(bidTenantInfo, "sessionResponse.sessionId", true, true);
+
+```
+
+## To Request Email Verification link and Verify / Redeem Email verification link
+
+Add namespace on the top of the your page:
+
+```
+using BIDHelpers.BIDAccessCodes;
+using BIDHelpers.BIDTenant.Model;
+
+```
+- To Request Email Verification link
+Copy and past below line:
+
+```
+BIDTenantInfo bidTenantInfo = new BIDTenantInfo("dns", "communityName", "lecenseKey");
+var requestEmailVerificationResponse  = BIDAccessCodes.RequestEmailVerificationLink(bidTenantInfo, "emailTo", "emailTemplateB64OrNull", "emailSubjectOrNull", "createdBy", "ttl_seconds_or_null");
+
+```
+
+- To poll new UWL2.0 session 
+Copy and past below line:
+
+```
+BIDTenantInfo bidTenantInfo = new BIDTenantInfo("dns", "communityName", "lecenseKey");
+var fetchAccessCode = BIDAccessCodes.VerifyAndRedeemEmailVerificationCode(bidTenantInfo, requestEmailVerificationResponse.code);
 
 ```

@@ -53,6 +53,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BIDAccessCodes\BIDAccessCodes.cs" />
+    <Compile Include="BIDAccessCodes\Model\BIDAccessCodeEmailResultData.cs" />
+    <Compile Include="BIDAccessCodes\Model\BIDAccessCodePayloadData.cs" />
+    <Compile Include="BIDAccessCodes\Model\BIDAccessCodeResponse.cs" />
+    <Compile Include="BIDAccessCodes\Model\BIDRedeemEmailVerificationCodeResponse.cs" />
+    <Compile Include="BIDAccessCodes\Model\BIDRequestEmailVerificationLinkResponse.cs" />
     <Compile Include="BIDECDSA\BIDECDSA.cs" />
     <Compile Include="BIDECDSA\Model\BIDKeyPair.cs" />
     <Compile Include="BIDSessions\BIDSessions.cs" />
