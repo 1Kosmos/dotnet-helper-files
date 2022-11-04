@@ -177,7 +177,7 @@ namespace BIDHelpers.BIDSessions
             return ret;
         }
 
-        public static BIDSessionResponse PollSession(BIDTenantInfo tenantInfo, string sessionId, string fetchProfile, bool fetchDevices)
+        public static BIDSessionResponse PollSession(BIDTenantInfo tenantInfo, string sessionId, bool fetchProfile, bool fetchDevices)
         {
             BIDSessionResponse ret;
             try
@@ -237,7 +237,7 @@ namespace BIDHelpers.BIDSessions
                     ret.user_data = JsonConvert.DeserializeObject<IDictionary<string, object>>(dec_data);
                 }
 
-                if (ret != null && ret.data != null && ret.user_data.ContainsKey("did") && fetchProfile != null)
+                if (ret != null && ret.data != null && ret.user_data.ContainsKey("did") && fetchProfile)
                 {
                     ret.account_data = BIDUsers.BIDUsers.FetchUserByDID(tenantInfo, (string)ret.user_data["did"], fetchDevices);
                 }
