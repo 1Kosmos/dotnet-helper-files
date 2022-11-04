@@ -77,7 +77,7 @@ using BIDHelpers.BIDTenant.Model;
 Copy and past below line:
 
 ```
-BIDTenantInfo bidTenantInfo = new BIDTenantInfo("dns", "communityName", "lecenseKey");
+BIDTenantInfo bidTenantInfo = new BIDTenantInfo("dns", "communityName", "licenseKey");
 BIDCommunityInfo communityInfo = BIDTenant.GetCommunityInfo(bidTenantInfo);
 
 ```
@@ -86,7 +86,7 @@ BIDCommunityInfo communityInfo = BIDTenant.GetCommunityInfo(bidTenantInfo);
 Copy and past below line:
 
 ```
-BIDTenantInfo bidTenantInfo = new BIDTenantInfo("dns", "communityName", "lecenseKey");
+BIDTenantInfo bidTenantInfo = new BIDTenantInfo("dns", "communityName", "licenseKey");
 BIDSD sd = BIDTenant.GetSD(bidTenantInfo);
 
 ```
@@ -104,7 +104,7 @@ using BIDHelpers.BIDSessions.Model;
 Copy and past below line:
 
 ```
-BIDTenantInfo bidTenantInfo = new BIDTenantInfo("dns", "communityName", "lecenseKey");
+BIDTenantInfo bidTenantInfo = new BIDTenantInfo("dns", "communityName", "licenseKey");
 BIDSession sessionResponse = BIDSessions.CreateNewSession(bidTenantInfo, null, null);
 
 ```
@@ -113,7 +113,7 @@ BIDSession sessionResponse = BIDSessions.CreateNewSession(bidTenantInfo, null, n
 Copy and past below line:
 
 ```
-BIDTenantInfo bidTenantInfo = new BIDTenantInfo("dns", "communityName", "lecenseKey");
+BIDTenantInfo bidTenantInfo = new BIDTenantInfo("dns", "communityName", "licenseKey");
 BIDSessionResponse pollResponse = BIDSessions.PollSession(bidTenantInfo, "sessionResponse.sessionId", true, true);
 
 ```
@@ -131,7 +131,7 @@ using BIDHelpers.BIDTenant.Model;
 Copy and past below line:
 
 ```
-BIDTenantInfo bidTenantInfo = new BIDTenantInfo("dns", "communityName", "lecenseKey");
+BIDTenantInfo bidTenantInfo = new BIDTenantInfo("dns", "communityName", "licenseKey");
 var requestEmailVerificationResponse  = BIDAccessCodes.RequestEmailVerificationLink(bidTenantInfo, "emailTo", "emailTemplateB64OrNull", "emailSubjectOrNull", "createdBy", "ttl_seconds_or_null");
 
 ```
@@ -140,7 +140,7 @@ var requestEmailVerificationResponse  = BIDAccessCodes.RequestEmailVerificationL
 Copy and past below line:
 
 ```
-BIDTenantInfo bidTenantInfo = new BIDTenantInfo("dns", "communityName", "lecenseKey");
+BIDTenantInfo bidTenantInfo = new BIDTenantInfo("dns", "communityName", "licenseKey");
 var fetchAccessCode = BIDAccessCodes.VerifyAndRedeemEmailVerificationCode(bidTenantInfo, requestEmailVerificationResponse.code);
 
 ```
