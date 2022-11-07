@@ -95,6 +95,14 @@ namespace BIDHelpers.BIDSessions
             try
             {
                 BIDCommunityInfo communityInfo = BIDTenant.BIDTenant.GetCommunityInfo(tenantInfo);
+                if (communityInfo.community == null)
+                {
+                    return new BIDSession()
+                    {
+                        status = communityInfo.status,
+                        message = communityInfo.message
+                    };
+                }
                 BIDKeyPair keySet = BIDTenant.BIDTenant.GetKeySet();
                 string licenseKey = tenantInfo.licenseKey;
                 BIDSD sd = BIDTenant.BIDTenant.GetSD(tenantInfo);
