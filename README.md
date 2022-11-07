@@ -62,3 +62,85 @@ Copy and past below line:
 var decryptedPlainString = BIDECDSA.Decrypt(encryptedBase64String, sharedKey);
 
 ```
+
+## To get community info and sd (Service Directory)
+
+Add namespace on the top of the your page:
+
+```
+using BIDHelpers.BIDTenant;
+using BIDHelpers.BIDTenant.Model;
+
+```
+
+- To get Community Information
+Copy and past below line:
+
+```
+BIDTenantInfo bidTenantInfo = new BIDTenantInfo("dns", "communityName", "licenseKey");
+BIDCommunityInfo communityInfo = BIDTenant.GetCommunityInfo(bidTenantInfo);
+
+```
+
+- To get SD (Service Directory) Information
+Copy and past below line:
+
+```
+BIDTenantInfo bidTenantInfo = new BIDTenantInfo("dns", "communityName", "licenseKey");
+BIDSD sd = BIDTenant.GetSD(bidTenantInfo);
+
+```
+
+## To Create OR Poll UWL2.0 session
+
+Add namespace on the top of the your page:
+
+```
+using BIDHelpers.BIDSessions;
+using BIDHelpers.BIDSessions.Model;
+
+```
+- To create new UWL2.0 session 
+Copy and past below line:
+
+```
+BIDTenantInfo bidTenantInfo = new BIDTenantInfo("dns", "communityName", "licenseKey");
+BIDSession sessionResponse = BIDSessions.CreateNewSession(bidTenantInfo, null, null);
+
+```
+
+- To poll new UWL2.0 session 
+Copy and past below line:
+
+```
+BIDTenantInfo bidTenantInfo = new BIDTenantInfo("dns", "communityName", "licenseKey");
+BIDSessionResponse pollResponse = BIDSessions.PollSession(bidTenantInfo, "sessionResponse.sessionId", true, true);
+
+```
+
+## To Request Email Verification link and Verify / Redeem Email verification link
+
+Add namespace on the top of the your page:
+
+```
+using BIDHelpers.BIDAccessCodes;
+using BIDHelpers.BIDTenant.Model;
+
+```
+- To Request Email Verification link
+Copy and past below line:
+
+```
+BIDTenantInfo bidTenantInfo = new BIDTenantInfo("dns", "communityName", "licenseKey");
+var requestEmailVerificationResponse  = BIDAccessCodes.RequestEmailVerificationLink(bidTenantInfo, "emailTo", "emailTemplateB64OrNull", "emailSubjectOrNull", "createdBy", "ttl_seconds_or_null");
+
+```
+
+- To poll new UWL2.0 session 
+Copy and past below line:
+
+```
+BIDTenantInfo bidTenantInfo = new BIDTenantInfo("dns", "communityName", "licenseKey");
+var fetchAccessCode = BIDAccessCodes.VerifyAndRedeemEmailVerificationCode(bidTenantInfo, requestEmailVerificationResponse.code);
+
+```

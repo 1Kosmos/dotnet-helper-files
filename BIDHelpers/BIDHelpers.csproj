@@ -12,6 +12,7 @@
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -34,26 +35,49 @@
     <Reference Include="BouncyCastle.Crypto, Version=1.8.9.0, Culture=neutral, PublicKeyToken=0e99375e54769942">
       <HintPath>..\packages\BouncyCastle.1.8.9\lib\BouncyCastle.Crypto.dll</HintPath>
     </Reference>
+    <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.12.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.Composition" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Net.Http.Formatting, Version=5.2.9.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.2.9\lib\net45\System.Net.Http.Formatting.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.Caching" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
-    <Reference Include="System.Net.Http" />
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BIDAccessCodes\BIDAccessCodes.cs" />
+    <Compile Include="BIDAccessCodes\Model\BIDAccessCodeEmailResultData.cs" />
+    <Compile Include="BIDAccessCodes\Model\BIDAccessCodePayloadData.cs" />
+    <Compile Include="BIDAccessCodes\Model\BIDAccessCodeResponse.cs" />
+    <Compile Include="BIDAccessCodes\Model\BIDRedeemEmailVerificationCodeResponse.cs" />
+    <Compile Include="BIDAccessCodes\Model\BIDRequestEmailVerificationLinkResponse.cs" />
     <Compile Include="BIDECDSA\BIDECDSA.cs" />
     <Compile Include="BIDECDSA\Model\BIDKeyPair.cs" />
-    <Compile Include="obj\Debug\.NETFramework,Version=v4.6.1.AssemblyAttributes.cs" />
+    <Compile Include="BIDSessions\BIDSessions.cs" />
+    <Compile Include="BIDSessions\Model\BIDDevice.cs" />
+    <Compile Include="BIDSessions\Model\BIDPoNData.cs" />
+    <Compile Include="BIDSessions\Model\BIDSession.cs" />
+    <Compile Include="BIDSessions\Model\BIDSessionResponse.cs" />
+    <Compile Include="BIDTenant\BIDTenant.cs" />
+    <Compile Include="BIDTenant\Model\BIDCommunityInfo.cs" />
+    <Compile Include="BIDTenant\Model\BIDSD.cs" />
+    <Compile Include="BIDTenant\Model\BIDTenantInfo.cs" />
     <Compile Include="BIDECDSA\Utils\Cryptor.cs" />
     <Compile Include="BIDECDSA\Model\ECCKey.cs" />
+    <Compile Include="BIDUsers\BIDUsers.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="WTM\WTM.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="obj\Debug\BIDHelpers.csproj.AssemblyReference.cache" />
-    <None Include="obj\Debug\DesignTimeResolveAssemblyReferencesInput.cache" />
+    <None Include="app.config" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
@@ -62,7 +86,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="bin\Release\" />
-    <Folder Include="obj\Debug\TempPE\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
