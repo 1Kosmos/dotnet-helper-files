@@ -121,8 +121,8 @@ namespace BIDHelpers.BIDSessions
                 IDictionary<string, object> body = new Dictionary<string, object>
                 {
                     ["origin"] = origin,
-                    ["scopes"] = (scopes is object) ? scopes : "",
-                    ["authtype"] = (authType is object) ? authType : "none"
+                    ["scopes"] = (scopes != null && scopes != "") ? scopes : "",
+                    ["authtype"] = (authType != null && authType != "") ? authType : "none"
                 };
 
                 string sharedKey = BIDECDSA.BIDECDSA.CreateSharedKey(keySet.prKey, sessionsPublicKey);
