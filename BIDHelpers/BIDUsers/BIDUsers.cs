@@ -65,7 +65,7 @@ namespace BIDHelpers.BIDUsers
 
                 if (json == null && error != null)
                 {
-                    return ret = new BIDPoNData()
+                    return new BIDPoNData()
                     {
                         status = false,
                         message = error
@@ -79,7 +79,7 @@ namespace BIDHelpers.BIDUsers
             }
             catch (Exception e)
             {
-                ret = new BIDPoNData()
+                return new BIDPoNData()
                 {
                     status = false,
                     message = e.Message

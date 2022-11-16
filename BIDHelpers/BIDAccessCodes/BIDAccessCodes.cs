@@ -19,15 +19,6 @@ namespace BIDHelpers.BIDAccessCodes
 {
     public class BIDAccessCodes
     {
-        // Initializer cache
-        static readonly ObjectCache cache = MemoryCache.Default;
-        // create cache item policy
-        static readonly CacheItemPolicy cacheItemPolicy = new CacheItemPolicy
-        {
-            AbsoluteExpiration = DateTimeOffset.Now.AddSeconds(10 * 60),
-
-        };
-
         public static BIDRequestEmailVerificationLinkResponse RequestEmailVerificationLink(BIDTenantInfo tenantInfo, string emailTo, string emailTemplateB64OrNull, string emailSubjectOrNull, string createdBy, string ttl_seconds_or_null)
         {
             BIDRequestEmailVerificationLinkResponse ret = null;
@@ -35,15 +26,22 @@ namespace BIDHelpers.BIDAccessCodes
             {
                 if (emailTo is null || emailTo.Length == 0)
                 {
-                    BIDRequestEmailVerificationLinkResponse errorData = new BIDRequestEmailVerificationLinkResponse
+                    return new BIDRequestEmailVerificationLinkResponse
                     {
                         statusCode = 400,
                         message = "emailTo is required parameter"
                     };
-                    return errorData;
                 }
 
                 BIDCommunityInfo communityInfo = BIDTenant.BIDTenant.GetCommunityInfo(tenantInfo);
+                if (communityInfo.community == null)
+                {
+                    return new BIDRequestEmailVerificationLinkResponse
+                    {
+                        statusCode = 400,
+                        message = communityInfo.message
+                    };
+                }
                 BIDKeyPair keySet = BIDTenant.BIDTenant.GetKeySet();
                 string licenseKey = tenantInfo.licenseKey;
                 BIDSD sd = BIDTenant.BIDTenant.GetSD(tenantInfo);
@@ -111,12 +109,11 @@ namespace BIDHelpers.BIDAccessCodes
 
                 if (statusCode != 200)
                 {
-                    ret = new BIDRequestEmailVerificationLinkResponse
+                    return new BIDRequestEmailVerificationLinkResponse
                     {
                         statusCode = statusCode,
                         message = error
                     };
-                    return ret;
                 }
 
                 ret = JsonConvert.DeserializeObject<BIDRequestEmailVerificationLinkResponse>(JsonConvert.SerializeObject(json));
@@ -126,11 +123,7 @@ namespace BIDHelpers.BIDAccessCodes
             }
             catch (Exception e)
             {
-                ret = new BIDRequestEmailVerificationLinkResponse
-                {
-                    statusCode = 400,
-                    message = e.Message
-                };
+                return new BIDRequestEmailVerificationLinkResponse { statusCode = 400, message = e.Message };
             }
             return ret;
         }
@@ -178,12 +171,11 @@ namespace BIDHelpers.BIDAccessCodes
 
                 if (statusCode != 200)
                 {
-                    ret = new BIDAccessCodeResponse
+                    return new BIDAccessCodeResponse
                     {
                         statusCode = statusCode,
                         message = error
                     };
-                    return ret;
                 }
 
                 IDictionary<string, string> map = JsonConvert.DeserializeObject<IDictionary<string, string>>(JsonConvert.SerializeObject(json));
@@ -200,11 +192,7 @@ namespace BIDHelpers.BIDAccessCodes
             }
             catch (Exception e)
             {
-                ret = new BIDAccessCodeResponse
-                {
-                    statusCode = 400,
-                    message = e.Message
-                };
+                return new BIDAccessCodeResponse { statusCode = 400, message = e.Message };
             }
             return ret;
         }
@@ -215,6 +203,14 @@ namespace BIDHelpers.BIDAccessCodes
             try
             {
                 BIDCommunityInfo communityInfo = BIDTenant.BIDTenant.GetCommunityInfo(tenantInfo);
+                if (communityInfo.community == null)
+                {
+                    return new BIDAccessCodeResponse
+                    {
+                        statusCode = 400,
+                        message = communityInfo.message
+                    };
+                }
                 BIDKeyPair keySet = BIDTenant.BIDTenant.GetKeySet();
                 string licenseKey = tenantInfo.licenseKey;
                 BIDSD sd = BIDTenant.BIDTenant.GetSD(tenantInfo);
@@ -268,12 +264,11 @@ namespace BIDHelpers.BIDAccessCodes
 
                 if (statusCode != 200)
                 {
-                    ret = new BIDAccessCodeResponse
+                    return new BIDAccessCodeResponse
                     {
                         statusCode = statusCode,
                         message = error
                     };
-                    return ret;
                 }
 
                 if (json != null && json.message != null && statusCode == 200)
@@ -286,11 +281,7 @@ namespace BIDHelpers.BIDAccessCodes
             }
             catch (Exception e)
             {
-                ret = new BIDAccessCodeResponse
-                {
-                    statusCode = 400,
-                    message = e.Message
-                };
+                return new BIDAccessCodeResponse { statusCode = 400, message = e.Message };
             }
             return ret;
         }
