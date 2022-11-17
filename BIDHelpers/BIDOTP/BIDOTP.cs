@@ -10,7 +10,6 @@ using System;
 using System.Collections.Generic;
 using Newtonsoft.Json;
 using System.Net;
-using System.Runtime.Caching;
 using BIDHelpers.BIDTenant.Model;
 using BIDHelpers.BIDECDSA.Model;
 using BIDHelpers.BIDOTP.Model;
@@ -20,15 +19,7 @@ namespace BIDHelpers.BIDOTP
 
     public class BIDOTP
     {
-        // Initializer cache
-        static readonly ObjectCache cache = MemoryCache.Default;
-        // create cache item policy
-        static readonly CacheItemPolicy cacheItemPolicy = new CacheItemPolicy
-        {
-            AbsoluteExpiration = DateTimeOffset.Now.AddSeconds(10 * 60),
-        };
-
-        public static BIDOtpResponse requestOTP(BIDTenantInfo tenantInfo, string userId, string emailOrNull, string phoneOrNull, string isdCodeOrNull)
+        public static BIDOtpResponse RequestOTP(BIDTenantInfo tenantInfo, string userName, string emailOrNull, string phoneOrNull, string isdCodeOrNull)
         {
             BIDOtpResponse ret = null;
             try
@@ -48,7 +39,7 @@ namespace BIDHelpers.BIDOTP
 
                 IDictionary<string, object> body = new Dictionary<string, object>
                 {
-                    ["userId"] = userId,
+                    ["userId"] = userName,
                     ["tenantId"] = communityInfo.tenant.id,
                     ["communityId"] = communityInfo.community.id
                 };
@@ -81,7 +72,7 @@ namespace BIDHelpers.BIDOTP
                 {
                     if (item.Key == "error")
                     {
-                        error = JsonConvert.SerializeObject(item.Value);
+                        error = Convert.ToString(item.Value);
                     }
                     if (item.Key == "status")
                     {
@@ -108,11 +99,7 @@ namespace BIDHelpers.BIDOTP
 
                 if (error != null)
                 {
-                    return new BIDOtpResponse()
-                    {
-                        error_code = statusCode,
-                        message = error
-                    };
+                    return JsonConvert.DeserializeObject<BIDOtpResponse>(error);
                 }
 
             }
@@ -124,7 +111,7 @@ namespace BIDHelpers.BIDOTP
             return ret;
         }
 
-        public static BIDOtpVerifyResult verifyOTP(BIDTenantInfo tenantInfo, string userId, string otpCode)
+        public static BIDOtpVerifyResult VerifyOTP(BIDTenantInfo tenantInfo, string userName, string otpCode)
         {
             BIDOtpVerifyResult ret;
             try
@@ -144,7 +131,7 @@ namespace BIDHelpers.BIDOTP
 
                 IDictionary<string, object> body = new Dictionary<string, object>
                 {
-                    ["userId"] = userId,
+                    ["userId"] = userName,
                     ["code"] = otpCode,
                     ["tenantId"] = communityInfo.tenant.id,
                     ["communityId"] = communityInfo.community.id
@@ -167,7 +154,7 @@ namespace BIDHelpers.BIDOTP
                 {
                     if (item.Key == "error")
                     {
-                        error = JsonConvert.SerializeObject(item.Value);
+                        error = Convert.ToString(item.Value);
                     }
                     if (item.Key == "status")
                     {
@@ -181,11 +168,7 @@ namespace BIDHelpers.BIDOTP
 
                 if (error != null)
                 {
-                    return new BIDOtpVerifyResult()
-                    {
-                        error_code = statusCode,
-                        message = error
-                    };
+                    return JsonConvert.DeserializeObject<BIDOtpVerifyResult>(error);
                 }
 
                 ret = JsonConvert.DeserializeObject<BIDOtpVerifyResult>(JsonConvert.SerializeObject(json));
