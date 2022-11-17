@@ -144,3 +144,31 @@ BIDTenantInfo bidTenantInfo = new BIDTenantInfo("dns", "communityName", "license
 var fetchAccessCode = BIDAccessCodes.VerifyAndRedeemEmailVerificationCode(bidTenantInfo, requestEmailVerificationResponse.code);
 
 ```
+
+## To Request/Verify OTP through email and/or sms
+
+Add namespace on the top of the your page:
+
+```
+using BIDHelpers.BIDOTP;
+using BIDHelpers.BIDOTP.Model;
+using BIDHelpers.BIDTenant.Model;
+
+```
+- To Request OTP through email and/or sms
+Copy and past below line:
+
+```
+BIDTenantInfo bidTenantInfo = new BIDTenantInfo("dns", "communityName", "licenseKey");
+BIDOtpResponse requestOtp = BIDOTP.RequestOTP(bidTenantInfo, "userName", "emailToOrNull", "smsToOrNull", "smsISDCodeOrNull");
+
+```
+
+- To Verify OTP sent through email and/or sms 
+Copy and past below line:
+
+```
+BIDTenantInfo bidTenantInfo = new BIDTenantInfo("dns", "communityName", "licenseKey");
+BIDOtpVerifyResult verifyOTP = BIDOTP.VerifyOTP(bidTenantInfo, "username", "otpCode");
+
+```

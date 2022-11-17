@@ -61,6 +61,10 @@
     <Compile Include="BIDAccessCodes\Model\BIDRequestEmailVerificationLinkResponse.cs" />
     <Compile Include="BIDECDSA\BIDECDSA.cs" />
     <Compile Include="BIDECDSA\Model\BIDKeyPair.cs" />
+    <Compile Include="BIDOTP\BIDOTP.cs" />
+    <Compile Include="BIDOTP\Model\BIDOtpResponse.cs" />
+    <Compile Include="BIDOTP\Model\BIDOtpValue.cs" />
+    <Compile Include="BIDOTP\Model\BIDOtpVerifyResult.cs" />
     <Compile Include="BIDSessions\BIDSessions.cs" />
     <Compile Include="BIDSessions\Model\BIDDevice.cs" />
     <Compile Include="BIDSessions\Model\BIDPoNData.cs" />
