@@ -77,7 +77,7 @@ using BIDHelpers.BIDTenant.Model;
 Copy and past below line:
 
 ```
-BIDTenantInfo bidTenantInfo = new BIDTenantInfo("dns", "communityName", "licenseKey");
+BIDTenantInfo bidTenantInfo = new BIDTenantInfo("<dns>", "<communityName>", "<licenseKey>");
 BIDCommunityInfo communityInfo = BIDTenant.GetCommunityInfo(bidTenantInfo);
 
 ```
@@ -86,7 +86,7 @@ BIDCommunityInfo communityInfo = BIDTenant.GetCommunityInfo(bidTenantInfo);
 Copy and past below line:
 
 ```
-BIDTenantInfo bidTenantInfo = new BIDTenantInfo("dns", "communityName", "licenseKey");
+BIDTenantInfo bidTenantInfo = new BIDTenantInfo("<dns>", "<communityName>", "<licenseKey>");
 BIDSD sd = BIDTenant.GetSD(bidTenantInfo);
 
 ```
@@ -104,7 +104,7 @@ using BIDHelpers.BIDSessions.Model;
 Copy and past below line:
 
 ```
-BIDTenantInfo bidTenantInfo = new BIDTenantInfo("dns", "communityName", "licenseKey");
+BIDTenantInfo bidTenantInfo = new BIDTenantInfo("<dns>", "<communityName>", "<licenseKey>");
 BIDSession sessionResponse = BIDSessions.CreateNewSession(bidTenantInfo, null, null);
 
 ```
@@ -113,7 +113,7 @@ BIDSession sessionResponse = BIDSessions.CreateNewSession(bidTenantInfo, null, n
 Copy and past below line:
 
 ```
-BIDTenantInfo bidTenantInfo = new BIDTenantInfo("dns", "communityName", "licenseKey");
+BIDTenantInfo bidTenantInfo = new BIDTenantInfo("<dns>", "<communityName>", "<licenseKey>");
 BIDSessionResponse pollResponse = BIDSessions.PollSession(bidTenantInfo, "sessionResponse.sessionId", true, true);
 
 ```
@@ -131,8 +131,8 @@ using BIDHelpers.BIDTenant.Model;
 Copy and past below line:
 
 ```
-BIDTenantInfo bidTenantInfo = new BIDTenantInfo("dns", "communityName", "licenseKey");
-var requestEmailVerificationResponse  = BIDAccessCodes.RequestEmailVerificationLink(bidTenantInfo, "emailTo", "emailTemplateB64OrNull", "emailSubjectOrNull", "createdBy", "ttl_seconds_or_null");
+BIDTenantInfo bidTenantInfo = new BIDTenantInfo("<dns>", "<communityName>", "<licenseKey>");
+var requestEmailVerificationResponse  = BIDAccessCodes.RequestEmailVerificationLink(bidTenantInfo, "<emailTo>", "<emailTemplateB64OrNull>", "<emailSubjectOrNull>", "<createdBy>", "<ttl_seconds_or_null>");
 
 ```
 
@@ -140,7 +140,7 @@ var requestEmailVerificationResponse  = BIDAccessCodes.RequestEmailVerificationL
 Copy and past below line:
 
 ```
-BIDTenantInfo bidTenantInfo = new BIDTenantInfo("dns", "communityName", "licenseKey");
+BIDTenantInfo bidTenantInfo = new BIDTenantInfo("<dns>", "<communityName>", "<licenseKey>");
 var fetchAccessCode = BIDAccessCodes.VerifyAndRedeemEmailVerificationCode(bidTenantInfo, requestEmailVerificationResponse.code);
 
 ```
@@ -159,8 +159,8 @@ using BIDHelpers.BIDTenant.Model;
 Copy and past below line:
 
 ```
-BIDTenantInfo bidTenantInfo = new BIDTenantInfo("dns", "communityName", "licenseKey");
-BIDOtpResponse requestOtp = BIDOTP.RequestOTP(bidTenantInfo, "userName", "emailToOrNull", "smsToOrNull", "smsISDCodeOrNull");
+BIDTenantInfo bidTenantInfo = new BIDTenantInfo("<dns>", "<communityName>", "<licenseKey>");
+BIDOtpResponse requestOtp = BIDOTP.RequestOTP(bidTenantInfo, "<userName>", "<emailToOrNull>", "<smsToOrNull>", "<smsISDCodeOrNull>");
 
 ```
 
@@ -168,7 +168,50 @@ BIDOtpResponse requestOtp = BIDOTP.RequestOTP(bidTenantInfo, "userName", "emailT
 Copy and past below line:
 
 ```
-BIDTenantInfo bidTenantInfo = new BIDTenantInfo("dns", "communityName", "licenseKey");
-BIDOtpVerifyResult verifyOTP = BIDOTP.VerifyOTP(bidTenantInfo, "username", "otpCode");
+BIDTenantInfo bidTenantInfo = new BIDTenantInfo("<dns>", "<communityName>", "<licenseKey>");
+BIDOtpVerifyResult verifyOTP = BIDOTP.VerifyOTP(bidTenantInfo, "<username>", "<otpCode>");
+
+```
+
+
+## To create/poll new Driver's License verification session
+
+Add namespace on the top of the your page:
+
+```
+using BIDHelpers.BIDVerifyDocument;
+using BIDHelpers.BIDVerifyDocument.Model;
+using BIDHelpers.BIDMessaging;
+using BIDHelpers.BIDMessaging.Model;
+using BIDHelpers.BIDTenant.Model;
+
+```
+- To create new Driver's License verification session
+Copy and past below line:
+
+```
+BIDTenantInfo bidTenantInfo = new BIDTenantInfo("<dns>", "<communityName>", "<licenseKey>");			
+BIDCreateDocumentSessionResponse createdSessionResponse = BIDVerifyDocument.createDocumentSession(bidTenantInfo, "<dvcId>", "dl_object");
+
+```
+
+- To send SMS
+```
+BIDSendSMSResponse smsResponse = BIDMessaging.sendSMS(bidTenantInfo, "9463023515", "+91", smsTemplateB64);
+
+```
+
+- To poll new Driver's License response and verify the document
+Copy and past below line:
+
+```
+BIDTenantInfo bidTenantInfo = new BIDTenantInfo("<dns>", "<communityName>", "<licenseKey>");			
+BIDPollSessionResponse pollSessionResponse = BIDVerifyDocument.pollSessionResult(bidTenantInfo, "<dvcId>", "<sessionId>");
+
+```
+
+- To verify the document
+```
+BIDVerifyDocumentResponse documentResponse = BIDVerifyDocument.verifyDocument(bidTenantInfo, "<dvcId>", "<verifications>", "<faceCompareDocument>");
 
 ```
