@@ -61,6 +61,8 @@
     <Compile Include="BIDAccessCodes\Model\BIDRequestEmailVerificationLinkResponse.cs" />
     <Compile Include="BIDECDSA\BIDECDSA.cs" />
     <Compile Include="BIDECDSA\Model\BIDKeyPair.cs" />
+    <Compile Include="BIDMessaging\BIDMessaging.cs" />
+    <Compile Include="BIDMessaging\Model\BIDSendSMSResponse.cs" />
     <Compile Include="BIDOTP\BIDOTP.cs" />
     <Compile Include="BIDOTP\Model\BIDOtpResponse.cs" />
     <Compile Include="BIDOTP\Model\BIDOtpValue.cs" />
@@ -77,6 +79,12 @@
     <Compile Include="BIDECDSA\Utils\Cryptor.cs" />
     <Compile Include="BIDECDSA\Model\ECCKey.cs" />
     <Compile Include="BIDUsers\BIDUsers.cs" />
+    <Compile Include="BIDVerifyDocument\BIDVerifyDocument.cs" />
+    <Compile Include="BIDVerifyDocument\Model\BIDCreateDocumentSessionResponse.cs" />
+    <Compile Include="BIDVerifyDocument\Model\BIDDLObjectData.cs" />
+    <Compile Include="BIDVerifyDocument\Model\BIDLiveIdObjectData.cs" />
+    <Compile Include="BIDVerifyDocument\Model\BIDPollSessionResponse.cs" />
+    <Compile Include="BIDVerifyDocument\Model\BIDVerifyDocumentResponse.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="WTM\WTM.cs" />
   </ItemGroup>
