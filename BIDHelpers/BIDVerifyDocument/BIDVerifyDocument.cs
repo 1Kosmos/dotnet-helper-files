@@ -122,7 +122,7 @@ namespace BIDHelpers.BIDVerifyDocument
                 {
                     if (item.Key == "error")
                     {
-                        error = JsonConvert.SerializeObject(item.Value);
+                        error = Convert.ToString(item.Value);
                     }
                     if (item.Key == "status")
                     {
@@ -141,12 +141,12 @@ namespace BIDHelpers.BIDVerifyDocument
                     if (ret.data != null)
                     {
                         string dec_data = BIDECDSA.BIDECDSA.Decrypt(ret.data, sharedKey);
-                        ret = JsonConvert.DeserializeObject<BIDVerifyDocumentResponse>(JsonConvert.SerializeObject(dec_data));
+                        ret = JsonConvert.DeserializeObject<BIDVerifyDocumentResponse>(dec_data);
                     }
                 }
                 if (error != null)
                 {
-                    ret = JsonConvert.DeserializeObject<BIDVerifyDocumentResponse>(JsonConvert.SerializeObject(error));
+                    ret = JsonConvert.DeserializeObject<BIDVerifyDocumentResponse>(error);
                 }
 
             }
@@ -290,7 +290,7 @@ namespace BIDHelpers.BIDVerifyDocument
                 {
                     if (item.Key == "error")
                     {
-                        error = JsonConvert.SerializeObject(item.Value);
+                        error = Convert.ToString(item.Value);
                     }
                     if (item.Key == "status")
                     {
@@ -304,7 +304,7 @@ namespace BIDHelpers.BIDVerifyDocument
 
                 if (error != null)
                 {
-                    ret = JsonConvert.DeserializeObject<BIDPollSessionResponse>(error);
+                    return JsonConvert.DeserializeObject<BIDPollSessionResponse>(error);
                 }
 
                 ret = JsonConvert.DeserializeObject<BIDPollSessionResponse>(JsonConvert.SerializeObject(json));
@@ -312,7 +312,7 @@ namespace BIDHelpers.BIDVerifyDocument
                 if (ret.data != null)
                 {
                     string dec_data = BIDECDSA.BIDECDSA.Decrypt(ret.data, sharedKey);
-                    ret = JsonConvert.DeserializeObject<BIDPollSessionResponse>(JsonConvert.SerializeObject(dec_data));
+                    ret = JsonConvert.DeserializeObject<BIDPollSessionResponse>(dec_data);
                 }
 
             }
