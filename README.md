@@ -195,9 +195,9 @@ BIDCreateDocumentSessionResponse createdSessionResponse = BIDVerifyDocument.crea
 
 ```
 
-- To send SMS
+- Trigger SMS
 ```
-BIDSendSMSResponse smsResponse = BIDMessaging.sendSMS(bidTenantInfo, "9463023515", "+91", smsTemplateB64);
+BIDSendSMSResponse smsResponse = BIDMessaging.sendSMS(bidTenantInfo, "<smsTo>", "<smsISDCode>", "<smsTemplateB64>");
 
 ```
 
