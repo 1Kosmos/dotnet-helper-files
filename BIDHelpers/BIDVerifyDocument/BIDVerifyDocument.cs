@@ -115,7 +115,6 @@ namespace BIDHelpers.BIDVerifyDocument
 
                 IDictionary<string, object> response = WTM.ExecuteRequest("post", sd.docuverify + "/verify", headers, JsonConvert.SerializeObject(data));
 
-                //string responseStr = (string)response["response"];
                 string error = null;
                 int statusCode = 0;
                 dynamic json = null;
