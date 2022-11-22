@@ -18,7 +18,7 @@ namespace BIDHelpers.BIDMessaging
 {
     public class BIDMessaging
     {
-        public static BIDSendSMSResponse sendSMS(BIDTenantInfo tenantInfo, string smsTo, string smsISDCode, string smsTemplateB64)
+        public static BIDSendSMSResponse SendSMS(BIDTenantInfo tenantInfo, string smsTo, string smsISDCode, string smsTemplateB64)
         {
             BIDSendSMSResponse ret;
             try
