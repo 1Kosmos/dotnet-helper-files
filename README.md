@@ -77,7 +77,7 @@ using BIDHelpers.BIDTenant.Model;
 Copy and past below line:
 
 ```
-BIDTenantInfo bidTenantInfo = new BIDTenantInfo("dns", "communityName", "licenseKey");
+BIDTenantInfo bidTenantInfo = new BIDTenantInfo("<dns>", "<communityName>", "<licenseKey>");
 BIDCommunityInfo communityInfo = BIDTenant.GetCommunityInfo(bidTenantInfo);
 
 ```
@@ -86,7 +86,7 @@ BIDCommunityInfo communityInfo = BIDTenant.GetCommunityInfo(bidTenantInfo);
 Copy and past below line:
 
 ```
-BIDTenantInfo bidTenantInfo = new BIDTenantInfo("dns", "communityName", "licenseKey");
+BIDTenantInfo bidTenantInfo = new BIDTenantInfo("<dns>", "<communityName>", "<licenseKey>");
 BIDSD sd = BIDTenant.GetSD(bidTenantInfo);
 
 ```
@@ -104,7 +104,7 @@ using BIDHelpers.BIDSessions.Model;
 Copy and past below line:
 
 ```
-BIDTenantInfo bidTenantInfo = new BIDTenantInfo("dns", "communityName", "licenseKey");
+BIDTenantInfo bidTenantInfo = new BIDTenantInfo("<dns>", "<communityName>", "<licenseKey>");
 BIDSession sessionResponse = BIDSessions.CreateNewSession(bidTenantInfo, null, null);
 
 ```
@@ -113,7 +113,7 @@ BIDSession sessionResponse = BIDSessions.CreateNewSession(bidTenantInfo, null, n
 Copy and past below line:
 
 ```
-BIDTenantInfo bidTenantInfo = new BIDTenantInfo("dns", "communityName", "licenseKey");
+BIDTenantInfo bidTenantInfo = new BIDTenantInfo("<dns>", "<communityName>", "<licenseKey>");
 BIDSessionResponse pollResponse = BIDSessions.PollSession(bidTenantInfo, "sessionResponse.sessionId", true, true);
 
 ```
@@ -131,8 +131,8 @@ using BIDHelpers.BIDTenant.Model;
 Copy and past below line:
 
 ```
-BIDTenantInfo bidTenantInfo = new BIDTenantInfo("dns", "communityName", "licenseKey");
-var requestEmailVerificationResponse  = BIDAccessCodes.RequestEmailVerificationLink(bidTenantInfo, "emailTo", "emailTemplateB64OrNull", "emailSubjectOrNull", "createdBy", "ttl_seconds_or_null");
+BIDTenantInfo bidTenantInfo = new BIDTenantInfo("<dns>", "<communityName>", "<licenseKey>");
+var requestEmailVerificationResponse  = BIDAccessCodes.RequestEmailVerificationLink(bidTenantInfo, "<emailTo>", "<emailTemplateB64OrNull>", "<emailSubjectOrNull>", "<createdBy>", "<ttl_seconds_or_null>");
 
 ```
 
@@ -140,7 +140,204 @@ var requestEmailVerificationResponse  = BIDAccessCodes.RequestEmailVerificationL
 Copy and past below line:
 
 ```
-BIDTenantInfo bidTenantInfo = new BIDTenantInfo("dns", "communityName", "licenseKey");
+BIDTenantInfo bidTenantInfo = new BIDTenantInfo("<dns>", "<communityName>", "<licenseKey>");
 var fetchAccessCode = BIDAccessCodes.VerifyAndRedeemEmailVerificationCode(bidTenantInfo, requestEmailVerificationResponse.code);
+
+```
+
+## To Request/Verify OTP through email and/or sms
+
+Add namespace on the top of the your page:
+
+```
+using BIDHelpers.BIDOTP;
+using BIDHelpers.BIDOTP.Model;
+using BIDHelpers.BIDTenant.Model;
+
+```
+- To Request OTP through email and/or sms
+Copy and past below line:
+
+```
+BIDTenantInfo bidTenantInfo = new BIDTenantInfo("<dns>", "<communityName>", "<licenseKey>");
+BIDOtpResponse requestOtp = BIDOTP.RequestOTP(bidTenantInfo, "<userName>", "<emailToOrNull>", "<smsToOrNull>", "<smsISDCodeOrNull>");
+
+```
+
+- To Verify OTP sent through email and/or sms 
+Copy and past below line:
+
+```
+BIDTenantInfo bidTenantInfo = new BIDTenantInfo("<dns>", "<communityName>", "<licenseKey>");
+BIDOtpVerifyResult verifyOTP = BIDOTP.VerifyOTP(bidTenantInfo, "<username>", "<otpCode>");
+
+```
+
+
+## To create/poll new Driver's License verification session
+
+Add namespace on the top of the your page:
+
+```
+using BIDHelpers.BIDVerifyDocument;
+using BIDHelpers.BIDVerifyDocument.Model;
+using BIDHelpers.BIDMessaging;
+using BIDHelpers.BIDMessaging.Model;
+using BIDHelpers.BIDTenant.Model;
+
+```
+- To create new Driver's License verification session
+Copy and past below line:
+
+```
+BIDTenantInfo bidTenantInfo = new BIDTenantInfo("<dns>", "<communityName>", "<licenseKey>");			
+BIDCreateDocumentSessionResponse createdSessionResponse = BIDVerifyDocument.CreateDocumentSession(bidTenantInfo, "<dvcId>", "dl_object");
+
+```
+
+- Trigger SMS
+```
+BIDSendSMSResponse smsResponse = BIDMessaging.SendSMS(bidTenantInfo, "<smsTo>", "<smsISDCode>", "<smsTemplateB64>");
+
+```
+
+- To poll new Driver's License response and verify the document
+Copy and past below line:
+
+```
+BIDTenantInfo bidTenantInfo = new BIDTenantInfo("<dns>", "<communityName>", "<licenseKey>");			
+BIDPollSessionResponse pollSessionResponse = BIDVerifyDocument.PollSessionResult(bidTenantInfo, "<dvcId>", "<sessionId>");
+
+```
+
+- To verify the document
+```
+BIDVerifyDocumentResponse documentResponse = BIDVerifyDocument.VerifyDocument(bidTenantInfo, "<dvcId>", "<verifications>", "<faceCompareDocument>");
+
+```
+
+
+## To Register and Authenticate using FIDO2
+
+Add namespace on the top of the your page:
+
+```
+using BIDHelpers.BIDWebAuthn;
+using BIDHelpers.BIDWebAuthn.Model;
+using BIDHelpers.BIDTenant.Model;
+
+```
+- To FetchAttestationOptions for register
+Copy and past below line:
+
+```
+BIDTenantInfo bidTenantInfo = new BIDTenantInfo("<dns>", "<communityName>", "<licenseKey>");	
+		
+//If your device is a security key, such as a YubiKey
+var bidAttestationValues = new BIDAttestationOptionsValue()
+    {
+		displayName = "<displayName>",
+        username = "<username>",
+        dns = "<dns>",
+        attestation = "direct",
+        authenticatorSelection = new BIDAuthenticatorSelectionValue()
+        {
+           requireResidentKey = true
+        },
+    };
+
+//If your device is a platform authenticator, such as TouchID:
+var bidAttestationValues = new BIDAttestationOptionsValue()
+	{
+		ddisplayName = "<displayName>",
+		username = "<username>",
+		dns = "<dns>",
+		attestation = "direct",
+		authenticatorSelection = new BIDAuthenticatorSelectionValue()
+		{
+			authenticatorAttachment = "platform"
+		},
+	};
+	
+//If your device is a MacBook:
+var bidAttestationValues = new BIDAttestationOptionsValue()
+	{
+		displayName = "<displayName>",
+		username = "<username>",
+		dns = "<dns>",
+		attestation = "none",
+	};
+
+BIDAttestationOptionsResponse attestationOptionsResponse = BIDWebAuthn.FetchAttestationOptions(bidTenantInfo, "<bidAttestationValues>");
+
+```
+
+
+- To SubmitAttestationResult for registeration
+Copy and past below line:
+
+```
+BIDTenantInfo bidTenantInfo = new BIDTenantInfo("<dns>", "<communityName>", "<licenseKey>");
+BIDAttestationResultValue attestationResultRequest = new BIDAttestationResultValue
+            {
+                rawId = "<rawId>",
+                response = new BIDAttestationResultResponseValue() { 
+                attestationObject = "<attestationObject>",
+                clientDataJSON = "<clientDataJSON>",
+                getAuthenticatorData = {},
+                getPublicKey = {},
+                getPublicKeyAlgorithm = {},
+                getTransports = {},
+                },
+                authenticatorAttachment = "<authenticatorAttachment>",
+                getClientExtensionResults = "<getClientExtensionResults>",
+                id = "<id>",
+                type = "<type>",
+                dns = "<current domain>"
+            };
+BIDAttestationResultData attestationResultResponse = BIDWebAuthn.SubmitAttestationResult(bidTenantInfo, "<attestationResultRequest>");
+
+```
+
+- To FetchAssertionOptions for authenticate
+Copy and past below line:
+
+```
+BIDTenantInfo bidTenantInfo = new BIDTenantInfo("<dns>", "<communityName>", "<licenseKey>");	
+		
+BIDAssertionOptionValue assertionOptionRequest = new BIDAssertionOptionValue
+            {
+                username = "<username>",
+                displayName = "<displayName>",
+                dns = "<current domain>"
+            };
+BIDAssertionOptionResponse assertionOptionResponse = BIDWebAuthn.FetchAssertionOptions(bidTenantInfo, assertionOptionRequest);
+
+```
+
+
+- To SubmitAssertionResult for authenticate
+Copy and past below line:
+
+```
+BIDTenantInfo bidTenantInfo = new BIDTenantInfo("<dns>", "<communityName>", "<licenseKey>");
+BIDAssertionResultValue assertionResultRequest = new BIDAssertionResultValue
+            {
+                rawId = "<rawId>",
+                dns = "<dns>",
+                response = new BIDAssertionResultResponseValue()
+                {
+                    authenticatorData = "<authenticatorData>",
+                    signature = "<signature>",
+                    userHandle = "<userHandle>",
+                    clientDataJSON = "<clientDataJSON>",
+                },
+                getClientExtensionResults = "<getClientExtensionResults>",
+                id = "<id>",
+                type = "<type>"
+            };
+
+BIDAssertionResultResponse assertionResultResponse = BIDWebAuthn.SubmitAssertionResult(bidTenantInfo, assertionResultRequest);
+
 
 ```

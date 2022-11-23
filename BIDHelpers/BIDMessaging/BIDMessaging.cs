@@ -7,42 +7,55 @@
  */
 
 using BIDHelpers.BIDECDSA.Model;
-using BIDHelpers.BIDSessions.Model;
+using BIDHelpers.BIDMessaging.Model;
 using BIDHelpers.BIDTenant.Model;
-using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using Newtonsoft.Json;
 using System.Net;
 
-namespace BIDHelpers.BIDUsers
+namespace BIDHelpers.BIDMessaging
 {
-    public class BIDUsers
+    public class BIDMessaging
     {
-        public static BIDPoNData FetchUserByDID(BIDTenantInfo tenantInfo, string did, bool fetchDevices)
+        public static BIDSendSMSResponse SendSMS(BIDTenantInfo tenantInfo, string smsTo, string smsISDCode, string smsTemplateB64)
         {
-            BIDPoNData ret;
+            BIDSendSMSResponse ret;
             try
             {
                 BIDCommunityInfo communityInfo = BIDTenant.BIDTenant.GetCommunityInfo(tenantInfo);
+                if (communityInfo.community == null)
+                {
+                    return new BIDSendSMSResponse()
+                    {
+                        status = false,
+                        message = communityInfo.message
+                    };
+                }
+
                 BIDKeyPair keySet = BIDTenant.BIDTenant.GetKeySet();
                 string licenseKey = tenantInfo.licenseKey;
                 BIDSD sd = BIDTenant.BIDTenant.GetSD(tenantInfo);
 
-                string sharedKey = BIDECDSA.BIDECDSA.CreateSharedKey(keySet.prKey, communityInfo.community.publicKey);
+                string communityPublicKey = communityInfo.community.publicKey;
+
+                string sharedKey = BIDECDSA.BIDECDSA.CreateSharedKey(keySet.prKey, communityPublicKey);
 
                 IDictionary<string, string> headers = WTM.DefaultHeaders();
                 headers["licensekey"] = BIDECDSA.BIDECDSA.Encrypt(licenseKey, sharedKey);
                 headers["requestid"] = BIDECDSA.BIDECDSA.Encrypt(JsonConvert.SerializeObject(WTM.MakeRequestId()), sharedKey);
                 headers["publickey"] = keySet.pKey;
-                headers["X-TenantTag"] = communityInfo.tenant.tenanttag;
 
-                string url = sd.adminconsole + "/api/r1/community/" + communityInfo.community.name + "/userdid/" + did + "/userinfo";
-                if (fetchDevices)
+                IDictionary<string, object> body = new Dictionary<string, object>
                 {
-                    url += "?devicelist=true";
-                }
+                    ["tenantId"] = communityInfo.community.tenantid,
+                    ["communityId"] = communityInfo.community.id,
+                    ["smsTo"] = smsTo,
+                    ["smsISDCode"] = smsISDCode,
+                    ["smsTemplateB64"] = smsTemplateB64
+                };
 
-                IDictionary<string, object> response = WTM.ExecuteRequest("get", url, headers, null);
+                IDictionary<string, object> response = WTM.ExecuteRequest("post", sd.adminconsole + "/api/r2/messaging/schedule", headers, JsonConvert.SerializeObject(body));
 
                 string error = null;
                 int statusCode = 0;
@@ -51,7 +64,7 @@ namespace BIDHelpers.BIDUsers
                 {
                     if (item.Key == "error")
                     {
-                        error = JsonConvert.SerializeObject(item.Value);
+                        error = Convert.ToString(item.Value);
                     }
                     if (item.Key == "status")
                     {
@@ -63,27 +76,19 @@ namespace BIDHelpers.BIDUsers
                     }
                 }
 
-                if (json == null && error != null)
+                if (error != null)
                 {
-                    return new BIDPoNData()
-                    {
-                        status = false,
-                        message = error
-                    };
+                    ret = JsonConvert.DeserializeObject<BIDSendSMSResponse>(error);
+                    ret.status = false;
+                    return ret;
                 }
-                IDictionary<string, string> map = JsonConvert.DeserializeObject<IDictionary<string, string>>(JsonConvert.SerializeObject(json));
 
-                string dec_data = BIDECDSA.BIDECDSA.Decrypt(map["data"], sharedKey);
-                ret = JsonConvert.DeserializeObject<BIDPoNData>(dec_data);
+                ret = JsonConvert.DeserializeObject<BIDSendSMSResponse>(JsonConvert.SerializeObject(json));
 
             }
             catch (Exception e)
             {
-                return new BIDPoNData()
-                {
-                    status = false,
-                    message = e.Message
-                };
+                return new BIDSendSMSResponse() { message = e.Message, status = false };
             }
             return ret;
         }

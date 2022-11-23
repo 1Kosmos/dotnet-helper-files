@@ -176,11 +176,7 @@ namespace BIDHelpers.BIDSessions
             }
             catch (Exception e)
             {
-                ret = new BIDSession()
-                {
-                    status = false,
-                    message = e.Message
-                };
+                return new BIDSession() { status = false, message = e.Message };
             }
             return ret;
         }
@@ -191,6 +187,14 @@ namespace BIDHelpers.BIDSessions
             try
             {
                 BIDCommunityInfo communityInfo = BIDTenant.BIDTenant.GetCommunityInfo(tenantInfo);
+                if (communityInfo.community == null)
+                {
+                    return new BIDSessionResponse()
+                    {
+                        status = 400,
+                        message = communityInfo.message
+                    };
+                }
                 BIDKeyPair keySet = BIDTenant.BIDTenant.GetKeySet();
                 string licenseKey = tenantInfo.licenseKey;
                 BIDSD sd = BIDTenant.BIDTenant.GetSD(tenantInfo);
@@ -227,12 +231,11 @@ namespace BIDHelpers.BIDSessions
 
                 if (statusCode != 200)
                 {
-                    ret = new BIDSessionResponse
+                    return new BIDSessionResponse
                     {
                         status = statusCode,
                         message = error
                     };
-                    return ret;
                 }
 
                 ret = JsonConvert.DeserializeObject<BIDSessionResponse>(JsonConvert.SerializeObject(json));
@@ -253,7 +256,7 @@ namespace BIDHelpers.BIDSessions
             }
             catch (Exception e)
             {
-                ret = new BIDSessionResponse()
+                return new BIDSessionResponse()
                 {
                     status = 0,
                     message = e.Message
