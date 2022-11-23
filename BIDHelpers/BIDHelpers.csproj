@@ -85,6 +85,22 @@
     <Compile Include="BIDVerifyDocument\Model\BIDLiveIdObjectData.cs" />
     <Compile Include="BIDVerifyDocument\Model\BIDPollSessionResponse.cs" />
     <Compile Include="BIDVerifyDocument\Model\BIDVerifyDocumentResponse.cs" />
+    <Compile Include="BIDWebAuthn\BIDWebAuthn.cs" />
+    <Compile Include="BIDWebAuthn\Model\BIDAllowCredentials.cs" />
+    <Compile Include="BIDWebAuthn\Model\BIDAssertionOptionResponse.cs" />
+    <Compile Include="BIDWebAuthn\Model\BIDAssertionOptionValue.cs" />
+    <Compile Include="BIDWebAuthn\Model\BIDAssertionResultResponse.cs" />
+    <Compile Include="BIDWebAuthn\Model\BIDAssertionResultResponseValue.cs" />
+    <Compile Include="BIDWebAuthn\Model\BIDAssertionResultValue.cs" />
+    <Compile Include="BIDWebAuthn\Model\BIDAttestationOptionsResponse.cs" />
+    <Compile Include="BIDWebAuthn\Model\BIDAttestationOptionsValue.cs" />
+    <Compile Include="BIDWebAuthn\Model\BIDAttestationResultData.cs" />
+    <Compile Include="BIDWebAuthn\Model\BIDAttestationResultResponseValue.cs" />
+    <Compile Include="BIDWebAuthn\Model\BIDAttestationResultValue.cs" />
+    <Compile Include="BIDWebAuthn\Model\BIDAttestationUserData.cs" />
+    <Compile Include="BIDWebAuthn\Model\BIDAuthenticatorSelectionValue.cs" />
+    <Compile Include="BIDWebAuthn\Model\BIDPubKeyCredParam.cs" />
+    <Compile Include="BIDWebAuthn\Model\BIDRelyingPartyValue.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="WTM\WTM.cs" />
   </ItemGroup>

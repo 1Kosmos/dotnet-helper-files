@@ -26,7 +26,7 @@ namespace BIDHelpers.BIDVerifyDocument
         {
             AbsoluteExpiration = DateTimeOffset.Now.AddSeconds(10 * 60),
         };
-        private static string getPublicKey(BIDTenantInfo tenantInfo)
+        private static string GetPublicKey(BIDTenantInfo tenantInfo)
         {
             string ret = null;
             try
@@ -80,7 +80,7 @@ namespace BIDHelpers.BIDVerifyDocument
             return ret;
         }
 
-        public static BIDVerifyDocumentResponse verifyDocument(BIDTenantInfo tenantInfo, string dvcId, string[] verifications, object document)
+        public static BIDVerifyDocumentResponse VerifyDocument(BIDTenantInfo tenantInfo, string dvcId, string[] verifications, object document)
         {
             BIDVerifyDocumentResponse ret = null;
             try
@@ -90,7 +90,7 @@ namespace BIDHelpers.BIDVerifyDocument
                 string licenseKey = tenantInfo.licenseKey;
                 BIDSD sd = BIDTenant.BIDTenant.GetSD(tenantInfo);
 
-                string docVerifyPublicKey = getPublicKey(tenantInfo);
+                string docVerifyPublicKey = GetPublicKey(tenantInfo);
 
                 string sharedKey = BIDECDSA.BIDECDSA.CreateSharedKey(keySet.prKey, docVerifyPublicKey);
 
@@ -157,7 +157,7 @@ namespace BIDHelpers.BIDVerifyDocument
             }
             return ret;
         }
-        public static BIDCreateDocumentSessionResponse createDocumentSession(BIDTenantInfo tenantInfo, string dvcId, string documentType)
+        public static BIDCreateDocumentSessionResponse CreateDocumentSession(BIDTenantInfo tenantInfo, string dvcId, string documentType)
         {
             BIDCreateDocumentSessionResponse ret;
             try
@@ -175,7 +175,7 @@ namespace BIDHelpers.BIDVerifyDocument
                 string licenseKey = tenantInfo.licenseKey;
                 BIDSD sd = BIDTenant.BIDTenant.GetSD(tenantInfo);
 
-                string docVerifyPublicKey = getPublicKey(tenantInfo);
+                string docVerifyPublicKey = GetPublicKey(tenantInfo);
 
                 string sharedKey = BIDECDSA.BIDECDSA.CreateSharedKey(keySet.prKey, docVerifyPublicKey);
 
@@ -250,7 +250,7 @@ namespace BIDHelpers.BIDVerifyDocument
             return ret;
         }
 
-        public static BIDPollSessionResponse pollSessionResult(BIDTenantInfo tenantInfo, string dvcId, string sessionId)
+        public static BIDPollSessionResponse PollSessionResult(BIDTenantInfo tenantInfo, string dvcId, string sessionId)
         {
             BIDPollSessionResponse ret;
             try
@@ -259,7 +259,7 @@ namespace BIDHelpers.BIDVerifyDocument
                 string licenseKey = tenantInfo.licenseKey;
                 BIDSD sd = BIDTenant.BIDTenant.GetSD(tenantInfo);
 
-                string docVerifyPublicKey = getPublicKey(tenantInfo);
+                string docVerifyPublicKey = GetPublicKey(tenantInfo);
 
                 string sharedKey = BIDECDSA.BIDECDSA.CreateSharedKey(keySet.prKey, docVerifyPublicKey);
 
