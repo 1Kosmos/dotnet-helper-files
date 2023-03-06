@@ -1,4 +1,4 @@
 [submodule "BIDHelpers/shared"]
 	path = BIDHelpers/shared
 	url = https://github.com/1Kosmos/shared-dotnet-helper-files.git
-	branch = develop
+	branch = main
