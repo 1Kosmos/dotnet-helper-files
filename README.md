@@ -8,6 +8,7 @@
 ## Clone and build dotnet helpers BIDHelpers solution to create .dll
 
 - Clone the project repository: git clone https://github.com/1Kosmos/dotnet-helper-files.git
+
 	a) Clone the main repository git clone https://github.com/1Kosmos/dotnet-helper-files.git. Clone of main repository will not pull the submodules. You need to execute step 'b' and 'c' as well.
 
 	```shell 
