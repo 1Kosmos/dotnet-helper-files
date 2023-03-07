@@ -5,22 +5,20 @@
 - **Visual Studio **: 2017 or higher
 - **.NET Framework **: 4.6.1 or higher
 
-## Clone and build dotnet helpers BIDHelpers solution to create .dll
+## Clone the latest version of the [.NET SDK](https://github.com/1Kosmos/dotnet-helper-files.git) repo from our [github](https://github.com/1Kosmos) and performs the below steps.
 
-
-	1. Clone the main repository git clone https://github.com/1Kosmos/dotnet-helper-files.git. Clone of main repository will not pull the submodules. You need to execute step '2' and '3' as well.
+1. Clone the main repository git clone https://github.com/1Kosmos/dotnet-helper-files.git. Clone of main repository will not pull the submodules. You need to execute step '2' and '3' as well.
 
 	```shell 
 	git clone https://github.com/1Kosmos/dotnet-helper-files.git
 	```
-
-	2. To initialize a Git submodule, use the “git submodule update” command with the “–init” and the “–recursive” options. This command will register the git submodule directory path for 'shared' folder.
+2. To initialize a Git submodule, use the “git submodule update” command with the “–init” and the “–recursive” options. This command will register the git submodule directory path for 'shared' folder.
 
     ```shell 
 	git submodule update --init --recursive
 	```
 
-	3. In order to update an existing Git submodule, you need to execute the “git submodule update” with the “–remote” and the “–merge” option.
+3. In order to update an existing Git submodule, you need to execute the “git submodule update” with the “–remote” and the “–merge” option.
 
 	```shell 
     git submodule update --remote --merge
