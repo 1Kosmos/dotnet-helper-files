@@ -7,7 +7,7 @@
 
 ## Clone the latest version of the [.NET SDK](https://github.com/1Kosmos/dotnet-helper-files.git) repo from our [github](https://github.com/1Kosmos) and performs the below steps.
 
-1. Clone the main repository git clone https://github.com/1Kosmos/dotnet-helper-files.git. Clone of main repository will not pull the submodules. You need to execute step '2' and '3' as well.
+1. Clone the main repository git clone https://github.com/1Kosmos/dotnet-helper-files.git. Clone of main repository will not pull the submodules. You need to execute step `2` and `3` as well.
 
 	```shell 
 	git clone https://github.com/1Kosmos/dotnet-helper-files.git
