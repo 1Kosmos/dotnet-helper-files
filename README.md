@@ -5,9 +5,24 @@
 - **Visual Studio **: 2017 or higher
 - **.NET Framework **: 4.6.1 or higher
 
-## Clone and build dotnet helpers BIDHelpers solution to create .dll
+## Clone the latest version of the [.NET SDK](https://github.com/1Kosmos/dotnet-helper-files.git) repo from our [github](https://github.com/1Kosmos) and performs the below steps.
 
-- Clone the project repository: git clone https://github.com/1Kosmos/dotnet-helper-files.git
+1. Clone the main repository git clone https://github.com/1Kosmos/dotnet-helper-files.git. Clone of main repository will not pull the submodules. You need to execute step `2` and `3` as well.
+
+	```shell 
+	git clone https://github.com/1Kosmos/dotnet-helper-files.git
+	```
+2. To initialize a Git submodule, use the “git submodule update” command with the “–init” and the “–recursive” options. This command will register the git submodule directory path for 'shared' folder.
+
+    ```shell 
+	git submodule update --init --recursive
+	```
+
+3. In order to update an existing Git submodule, you need to execute the “git submodule update” with the “–remote” and the “–merge” option.
+
+	```shell 
+    git submodule update --remote --merge
+	```
 - Open the project solution in visual studio 2017 or higher (double click on BIDHelpers.sln file).
 - Build the solution, by clicking on project -> right click -> Build.
 - After successful build, dll named BIDHelpers.dll will be generated on location: BIDHelpers -> bin -> Debug.
