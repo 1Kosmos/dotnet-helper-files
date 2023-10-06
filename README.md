@@ -366,4 +366,3 @@ BIDAssertionResultResponse assertionResultResponse = BIDWebAuthn.SubmitAssertion
 
 
 ```
-
