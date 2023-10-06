@@ -9,20 +9,22 @@
 
 1. Clone the main repository git clone https://github.com/1Kosmos/dotnet-helper-files.git. Clone of main repository will not pull the submodules. You need to execute step `2` and `3` as well.
 
-	```shell 
-	git clone https://github.com/1Kosmos/dotnet-helper-files.git
-	```
+   ```shell
+   git clone https://github.com/1Kosmos/dotnet-helper-files.git
+   ```
+
 2. To initialize a Git submodule, use the “git submodule update” command with the “–init” and the “–recursive” options. This command will register the git submodule directory path for 'shared' folder.
 
-    ```shell 
-	git submodule update --init --recursive
-	```
+   ```shell
+   git submodule update --init --recursive
+   ```
 
 3. In order to update an existing Git submodule, you need to execute the “git submodule update” with the “–remote” and the “–merge” option.
 
-	```shell 
-    git submodule update --remote --merge
-	```
+   ```shell
+   git submodule update --remote --merge
+   ```
+
 - Open the project solution in visual studio 2017 or higher (double click on BIDHelpers.sln file).
 - Build the solution, by clicking on project -> right click -> Build.
 - After successful build, dll named BIDHelpers.dll will be generated on location: BIDHelpers -> bin -> Debug.
@@ -47,7 +49,8 @@ using BIDHelpers.BIDECDSA;
 Copy and past below line:
 
 ```
- var keyPair = BIDECDSA.GenerateKeyPair();
+ var partyA = BIDECDSA.GenerateKeyPair(); // (say server)
+ var partyB = BIDECDSA.GenerateKeyPair(); // (say client)
 
 ```
 
@@ -56,7 +59,11 @@ Copy and past below line:
 Copy and past below line:
 
 ```
- var sharedKey = BIDECDSA.CreateSharedKey(my.prKey, partyB.publickKey);
+var sharedKey = BIDECDSA.CreateSharedKey(<server private key>, <client public key>);
+
+ // Example:
+ var sharedKeyA = BIDECDSA.CreateSharedKey(partyA.prKey, partyB.pKey);
+ var sharedKeyB = BIDECDSA.CreateSharedKey(partyB.prKey, partyA.pKey);
 
 ```
 
@@ -65,7 +72,7 @@ Copy and past below line:
 Copy and past below line:
 
 ```
- var encryptedBase64String = BIDECDSA.Encrypt("any string", sharedKey);
+ var encryptedBase64String = BIDECDSA.Encrypt("any string", sharedKeyA);
 
 ```
 
@@ -74,7 +81,7 @@ Copy and past below line:
 Copy and past below line:
 
 ```
-var decryptedPlainString = BIDECDSA.Decrypt(encryptedBase64String, sharedKey);
+var decryptedPlainString = BIDECDSA.Decrypt(encryptedBase64String, sharedKeyB);
 
 ```
 
@@ -89,7 +96,7 @@ using BIDHelpers.BIDTenant.Model;
 ```
 
 - To get Community Information
-Copy and past below line:
+  Copy and past below line:
 
 ```
 BIDTenantInfo bidTenantInfo = new BIDTenantInfo("<dns>", "<communityName>", "<licenseKey>");
@@ -98,7 +105,7 @@ BIDCommunityInfo communityInfo = BIDTenant.GetCommunityInfo(bidTenantInfo);
 ```
 
 - To get SD (Service Directory) Information
-Copy and past below line:
+  Copy and past below line:
 
 ```
 BIDTenantInfo bidTenantInfo = new BIDTenantInfo("<dns>", "<communityName>", "<licenseKey>");
@@ -115,8 +122,9 @@ using BIDHelpers.BIDSessions;
 using BIDHelpers.BIDSessions.Model;
 
 ```
-- To create new UWL2.0 session 
-Copy and past below line:
+
+- To create new UWL2.0 session
+  Copy and past below line:
 
 ```
 BIDTenantInfo bidTenantInfo = new BIDTenantInfo("<dns>", "<communityName>", "<licenseKey>");
@@ -124,8 +132,8 @@ BIDSession sessionResponse = BIDSessions.CreateNewSession(bidTenantInfo, null, n
 
 ```
 
-- To poll new UWL2.0 session 
-Copy and past below line:
+- To poll new UWL2.0 session
+  Copy and past below line:
 
 ```
 BIDTenantInfo bidTenantInfo = new BIDTenantInfo("<dns>", "<communityName>", "<licenseKey>");
@@ -142,8 +150,9 @@ using BIDHelpers.BIDAccessCodes;
 using BIDHelpers.BIDTenant.Model;
 
 ```
+
 - To Request Email Verification link
-Copy and past below line:
+  Copy and past below line:
 
 ```
 BIDTenantInfo bidTenantInfo = new BIDTenantInfo("<dns>", "<communityName>", "<licenseKey>");
@@ -151,8 +160,8 @@ var requestEmailVerificationResponse  = BIDAccessCodes.RequestEmailVerificationL
 
 ```
 
-- To poll new UWL2.0 session 
-Copy and past below line:
+- To poll new UWL2.0 session
+  Copy and past below line:
 
 ```
 BIDTenantInfo bidTenantInfo = new BIDTenantInfo("<dns>", "<communityName>", "<licenseKey>");
@@ -170,8 +179,9 @@ using BIDHelpers.BIDOTP.Model;
 using BIDHelpers.BIDTenant.Model;
 
 ```
+
 - To Request OTP through email and/or sms
-Copy and past below line:
+  Copy and past below line:
 
 ```
 BIDTenantInfo bidTenantInfo = new BIDTenantInfo("<dns>", "<communityName>", "<licenseKey>");
@@ -179,15 +189,14 @@ BIDOtpResponse requestOtp = BIDOTP.RequestOTP(bidTenantInfo, "<userName>", "<ema
 
 ```
 
-- To Verify OTP sent through email and/or sms 
-Copy and past below line:
+- To Verify OTP sent through email and/or sms
+  Copy and past below line:
 
 ```
 BIDTenantInfo bidTenantInfo = new BIDTenantInfo("<dns>", "<communityName>", "<licenseKey>");
 BIDOtpVerifyResult verifyOTP = BIDOTP.VerifyOTP(bidTenantInfo, "<username>", "<otpCode>");
 
 ```
-
 
 ## To create/poll new Driver's License verification session
 
@@ -201,36 +210,38 @@ using BIDHelpers.BIDMessaging.Model;
 using BIDHelpers.BIDTenant.Model;
 
 ```
+
 - To create new Driver's License verification session
-Copy and past below line:
+  Copy and past below line:
 
 ```
-BIDTenantInfo bidTenantInfo = new BIDTenantInfo("<dns>", "<communityName>", "<licenseKey>");			
+BIDTenantInfo bidTenantInfo = new BIDTenantInfo("<dns>", "<communityName>", "<licenseKey>");
 BIDCreateDocumentSessionResponse createdSessionResponse = BIDVerifyDocument.CreateDocumentSession(bidTenantInfo, "<dvcId>", "dl_object");
 
 ```
 
 - Trigger SMS
+
 ```
 BIDSendSMSResponse smsResponse = BIDMessaging.SendSMS(bidTenantInfo, "<smsTo>", "<smsISDCode>", "<smsTemplateB64>");
 
 ```
 
 - To poll new Driver's License response and verify the document
-Copy and past below line:
+  Copy and past below line:
 
 ```
-BIDTenantInfo bidTenantInfo = new BIDTenantInfo("<dns>", "<communityName>", "<licenseKey>");			
+BIDTenantInfo bidTenantInfo = new BIDTenantInfo("<dns>", "<communityName>", "<licenseKey>");
 BIDPollSessionResponse pollSessionResponse = BIDVerifyDocument.PollSessionResult(bidTenantInfo, "<dvcId>", "<sessionId>");
 
 ```
 
 - To verify the document
+
 ```
 BIDVerifyDocumentResponse documentResponse = BIDVerifyDocument.VerifyDocument(bidTenantInfo, "<dvcId>", "<verifications>", "<faceCompareDocument>");
 
 ```
-
 
 ## To Register and Authenticate using FIDO2
 
@@ -242,12 +253,13 @@ using BIDHelpers.BIDWebAuthn.Model;
 using BIDHelpers.BIDTenant.Model;
 
 ```
+
 - To FetchAttestationOptions for register
-Copy and past below line:
+  Copy and past below line:
 
 ```
-BIDTenantInfo bidTenantInfo = new BIDTenantInfo("<dns>", "<communityName>", "<licenseKey>");	
-		
+BIDTenantInfo bidTenantInfo = new BIDTenantInfo("<dns>", "<communityName>", "<licenseKey>");
+
 //If your device is a security key, such as a YubiKey
 var bidAttestationValues = new BIDAttestationOptionsValue()
     {
@@ -273,7 +285,7 @@ var bidAttestationValues = new BIDAttestationOptionsValue()
 			authenticatorAttachment = "platform"
 		},
 	};
-	
+
 //If your device is a MacBook:
 var bidAttestationValues = new BIDAttestationOptionsValue()
 	{
@@ -287,16 +299,15 @@ BIDAttestationOptionsResponse attestationOptionsResponse = BIDWebAuthn.FetchAtte
 
 ```
 
-
 - To SubmitAttestationResult for registeration
-Copy and past below line:
+  Copy and past below line:
 
 ```
 BIDTenantInfo bidTenantInfo = new BIDTenantInfo("<dns>", "<communityName>", "<licenseKey>");
 BIDAttestationResultValue attestationResultRequest = new BIDAttestationResultValue
             {
                 rawId = "<rawId>",
-                response = new BIDAttestationResultResponseValue() { 
+                response = new BIDAttestationResultResponseValue() {
                 attestationObject = "<attestationObject>",
                 clientDataJSON = "<clientDataJSON>",
                 getAuthenticatorData = {},
@@ -315,11 +326,11 @@ BIDAttestationResultData attestationResultResponse = BIDWebAuthn.SubmitAttestati
 ```
 
 - To FetchAssertionOptions for authenticate
-Copy and past below line:
+  Copy and past below line:
 
 ```
-BIDTenantInfo bidTenantInfo = new BIDTenantInfo("<dns>", "<communityName>", "<licenseKey>");	
-		
+BIDTenantInfo bidTenantInfo = new BIDTenantInfo("<dns>", "<communityName>", "<licenseKey>");
+
 BIDAssertionOptionValue assertionOptionRequest = new BIDAssertionOptionValue
             {
                 username = "<username>",
@@ -330,9 +341,8 @@ BIDAssertionOptionResponse assertionOptionResponse = BIDWebAuthn.FetchAssertionO
 
 ```
 
-
 - To SubmitAssertionResult for authenticate
-Copy and past below line:
+  Copy and past below line:
 
 ```
 BIDTenantInfo bidTenantInfo = new BIDTenantInfo("<dns>", "<communityName>", "<licenseKey>");
