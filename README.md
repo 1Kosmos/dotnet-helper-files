@@ -59,7 +59,7 @@ Copy and past below line:
 Copy and past below line:
 
 ```
- var sharedKey = BIDECDSA.CreateSharedKey(<server private key>, <client public key>);
+var sharedKey = BIDECDSA.CreateSharedKey(<server private key>, <client public key>);
 
  // Example:
  var sharedKeyA = BIDECDSA.CreateSharedKey(partyA.prKey, partyB.pKey);
